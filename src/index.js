@@ -34,6 +34,10 @@ contactEmail.verify((error)=>{
     }
 });
 
+router.get("/",(req,res)=>{
+    res.send('Bienvenido a GMAIL-SEND-MSG-NODEJS')
+    });
+
 router.post(`${process.env.ROUTER}`,(req,res)=>{
     const name = req.body.firstName;
     const lastName = req.body.lastName;
