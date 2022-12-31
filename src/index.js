@@ -5,6 +5,10 @@ const router = Router();
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 //settings
 app.set('port',process.env.PORT || 4000);
 
@@ -21,8 +25,8 @@ router.get("/contact",(req,res)=>{
 const contactEmail = nodemailer.createTransport({
     service:'gmail',
     auth:{
-        user:"c.cristobal.palacios@gmail.com",
-        pass:"vdselfmtnqskrgci"
+        user:`${process.env.GMAIL}`,
+        pass:`${process.env.PASSWORD}`
     },
 })
 
@@ -42,7 +46,7 @@ router.post("/contact",(req,res)=>{
     const phone = req.body.phone;
     const mail = {
         from:name,
-        to:"c.cristobal.palacios@gmail.com",
+        to:`${process.env.GMAIL}`,
         subject:"Contact Form Submission - Portfolio",
         html:`<p>Name: ${name}</p>
             <p>LastName: ${lastName}</p>
@@ -63,5 +67,5 @@ router.post("/contact",(req,res)=>{
 
 //starting the server
 app.listen(app.get('port'),()=>{
-    console.log(`server on port ${app.get('port')}`);
+    console.log(`server on port ${app.get('port')}`)
 })
