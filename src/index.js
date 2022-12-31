@@ -18,10 +18,6 @@ app.use(express.urlencoded({extended:false}));
 app.use(cors());
 app.use("/",router);
 
-router.get("/contact",(req,res)=>{
-    res.send('holaa');
-})
-
 const contactEmail = nodemailer.createTransport({
     service:'gmail',
     auth:{
@@ -38,7 +34,7 @@ contactEmail.verify((error)=>{
     }
 });
 
-router.post("/contact",(req,res)=>{
+router.post(`${process.env.ROUTER}`,(req,res)=>{
     const name = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
